@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "lumospectrum",
+  "version": "${version}",
+  "name": "Lumo Spectrum Addons",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/lumospectrum/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "scala",
+        "value": "gay.menkissing.lumospectrum.client.LumoSpectrumClient"
+      }
+    ],
+    "main": [
+      {
+        "adapter": "scala",
+        "value": "gay.menkissing.lumospectrum.LumoSpectrum"
+      }
+    ],
+    "fabric-datagen": [
+      {
+        "adapter": "scala",
+        "value": "gay.menkissing.lumospectrum.datagen.LumoDatagen"
+      }
+    ]
+  },
+  "mixins": [
+    "lumospectrum.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}",
+    "spectrum": ">=${spectrum_version}"
+  }
+}
