@@ -17,34 +17,40 @@ package gay.menkissing.lumospectrum.util.registry.builder
 
 import com.google.common.collect.HashMultimap
 import gay.menkissing.lumospectrum.util.registry.InfoCollector
+import gay.menkissing.lumospectrum.util.registry.provider.generators.LumoTagsProvider.ChildKind
 import net.minecraft.core.Registry
-import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.{ResourceKey, ResourceLocation}
 import net.minecraft.tags.TagKey
 
 import scala.collection.mutable
 
 class TagBuilder[T, P](val owner: InfoCollector, val parent: P, val registryKey: ResourceKey[? <: Registry[T]], val tag: TagKey[T]) extends Builder[TagKey[T], P]:
-  private val childItems = mutable.LinkedHashSet[T]()
-  private val childTags = mutable.LinkedHashSet[TagKey[T]]()
+  private val childItems = mutable.LinkedHashSet[ChildKind[T]]()
 
   def add(child: T): this.type =
-    childItems.add(child)
+    childItems.add(ChildKind.Direct(child))
+    this
+  def addOptional(child: ResourceLocation): this.type =
+    childItems.add(ChildKind.Optional(child))
     this
 
-
   def addTag(daTag: TagKey[T]): this.type =
-    childTags.add(daTag)
+    childItems.add(ChildKind.Tag(daTag))
     this
     
   def tag(parent: TagKey[T]): this.type =
     // parent
     tag(registryKey, parent)
-
+  
+  def lang(value: String): this.type =
+    lang(it => TagBuilder.getLang(it), value)
   override protected def registered(): TagKey[T] =
-    childTags.foreach { child =>
-      owner.addTagToTag(registryKey, tag, child)
-    }
-    childItems.foreach { child =>
-      owner.addToTag(registryKey, tag, child)
-    }
+    childItems.foreach: child =>
+      owner.addToTagDirect(registryKey, tag, child)
     tag
+
+object TagBuilder:
+  def getLang(tag: TagKey[?]): String =
+    val loc = tag.location()
+    s"tag.${loc.getNamespace}.${loc.getPath.replace("/", ".")}"
+    

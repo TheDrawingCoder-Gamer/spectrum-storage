@@ -1,7 +1,7 @@
 package gay.menkissing.lumospectrum.content
 
 import gay.menkissing.lumospectrum.LumoSpectrum
-import gay.menkissing.lumospectrum.content.item.BottomlessBottleItem
+import gay.menkissing.lumospectrum.content.item.{BottomlessBottleItem, ToolContainerItem}
 import gay.menkissing.lumospectrum.util.registry.InfoCollector
 import gay.menkissing.lumospectrum.util.registry.builder.ItemBuilder
 import net.fabricmc.fabric.api.itemgroup.v1.{FabricItemGroup, ItemGroupEvents}
@@ -37,6 +37,12 @@ object LumoSpectrumItems:
                  .tooltip("usage_pickup", "Use to pickup")
                  .tooltip("usage_place", "Sneak-use to place")
                  .tooltip("count_mb", "%1$s mB / %2$s buckets")
+                 .make()
+
+  val toolContainer: Item =
+    InfoCollector.instance.item(LumoSpectrum.locate("tool_container"), new ToolContainerItem(Item.Properties().stacksTo(1)))
+                 .lang("Tool Container")
+                 .defaultModel()
                  .make()
 
   def init(): Unit =

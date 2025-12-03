@@ -47,6 +47,14 @@ dependencies {
     modImplementation "dev.krysztal:krysztal-language-scala:${project.kls_version}+scala.${project.scala_version}"
 
     modImplementation "de.dafuqs:spectrum:${project.spectrum_version}"
+
+    // Item viewer
+    switch (recipe_viewer.toLowerCase(Locale.ROOT)) {
+        case "rei": modLocalRuntime("me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"); break
+        case "emi": modLocalRuntime("dev.emi:emi-fabric:${emi_version}"); break
+        case "disabled": break
+        default: println("Unknown recipe viewer specified: $recipe_viewer. Must be EMI, REI or disabled.")
+    }
 }
 
 processResources {

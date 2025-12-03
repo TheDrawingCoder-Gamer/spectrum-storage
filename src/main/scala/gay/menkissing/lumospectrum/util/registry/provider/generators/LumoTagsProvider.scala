@@ -30,11 +30,13 @@ import annotation.{nowarn, unchecked}
 
 class LumoTagsProvider[T](val owner: InfoCollector, registry: ResourceKey[Registry[T]], output: FabricDataOutput, lookup: CompletableFuture[HolderLookup.Provider])
   extends FabricTagProvider[T](output, registry, lookup):
+  import LumoTagsProvider.ChildKind
 
   override def tag(tag: TagKey[T]): FabricTagProvider[T]#FabricTagBuilder = super.getOrCreateTagBuilder(tag)
 
   @nowarn("msg=type test")
   override def addTags(provider: HolderLookup.Provider): Unit =
+    import ChildKind.*
     owner.tags.get(registryKey).forEach(_(this))
 
     val reg = provider.lookup(registryKey).get()
@@ -42,17 +44,24 @@ class LumoTagsProvider[T](val owner: InfoCollector, registry: ResourceKey[Regist
     val thangs = mutable.HashMap[T, ResourceKey[T]]()
 
     // done this way so i can SORT THAT THANG!!!
-    owner.tagMembers(registryKey).asMap().forEach: (tag, blocks) =>
-      val goodTag = tag.asInstanceOf[TagKey[T]]
+    owner.tagMembers(registryKey).asMap().asInstanceOf[java.util.Map[TagKey[T], java.util.Collection[ChildKind[T]]]].forEach: (tag, blocks) =>
+      val goodTag = tag
       val builder = super.getOrCreateTagBuilder(goodTag)
       blocks.iterator().asScala.toList.sortBy {
-        case key: TagKey[?] => "#" + key.location().toString
-        case block: T => thangs.getOrElseUpdate(block, reg.listElements().filter(_.value() == block).findFirst().get().key()).location().toString
+        case Tag(key) => "#" + key.location().toString
+        case Optional(loc) => loc.toString
+        case Direct(block) => thangs.getOrElseUpdate(block, reg.listElements().filter(_.value() == block).findFirst().get().key()).location().toString
       }.foreach {
-        case key: TagKey[T] => builder.addOptionalTag(key)
-        case block: T => builder.add(block)
+        case Tag(key) => builder.addOptionalTag(key)
+        case Optional(loc) => builder.addOptional(loc)
+        case Direct(block) => builder.add(block)
       }
 
+object LumoTagsProvider:
+  enum ChildKind[T]:
+    case Tag(tag: TagKey[T])
+    case Optional(loc: ResourceLocation)
+    case Direct(child: T)
 
 
 

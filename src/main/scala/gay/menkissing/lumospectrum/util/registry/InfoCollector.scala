@@ -18,6 +18,7 @@ package gay.menkissing.lumospectrum.util.registry
 import com.google.common.collect.{ArrayListMultimap, HashMultimap, Multimap}
 import gay.menkissing.lumospectrum.util.registry.builder.{BlockBuilder, ItemBuilder, TagBuilder}
 import gay.menkissing.lumospectrum.util.registry.provider.generators.{LumoBlockStateGenerator, LumoItemModelProvider, LumoModelProvider, LumoTagsProvider}
+import LumoTagsProvider.ChildKind
 import gay.menkissing.lumospectrum.LumoSpectrum
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.provider.{FabricBlockLootTableProvider, FabricLanguageProvider, FabricTagProvider}
@@ -41,7 +42,7 @@ import scala.collection.mutable
  * sort of inspired by registrate but registrate had too many things when I like just registering that thang
  */
 class InfoCollector:
-
+  import LumoTagsProvider.ChildKind
   private val lang = mutable.HashMap[String, String]()
 
   private val blockLootTables = mutable.HashMap[Block, FabricBlockLootTableProvider => LootTable.Builder]()
@@ -52,17 +53,22 @@ class InfoCollector:
 
   private[registry] val tags = ArrayListMultimap.create[ResourceKey[? <: Registry[?]], LumoTagsProvider[?] => Unit]()
 
-  private[registry] val tagMembers = mutable.HashMap[ResourceKey[? <: Registry[?]], Multimap[TagKey[?], Any]]()
+  private[registry] val tagMembers = mutable.HashMap[ResourceKey[? <: Registry[?]], Multimap[TagKey[?], ChildKind[?]]]()
 
   private lazy val doDatagen = System.getProperty("fabric-api.datagen") != null
 
-  def addToTag[T](registry: ResourceKey[? <: Registry[T]], tag: TagKey[T], block: T): Unit =
+  def addToTagDirect[T](registry: ResourceKey[? <: Registry[T]], tag: TagKey[T], block: ChildKind[T]): Unit =
     if doDatagen then
-      tagMembers.getOrElseUpdate(registry, ArrayListMultimap.create[TagKey[?], Any]()).put(tag, block)
+      tagMembers.getOrElseUpdate(registry, ArrayListMultimap.create()).put(tag, block)
+
+  def addToTag[T](registry: ResourceKey[? <: Registry[T]], tag: TagKey[T], block: T): Unit =
+    addToTagDirect(registry, tag, ChildKind.Direct(block))
 
   def addTagToTag[T](registry: ResourceKey[? <: Registry[T]], tag: TagKey[T], subtag: TagKey[T]): Unit =
-    if doDatagen then
-      tagMembers.getOrElseUpdate(registry, ArrayListMultimap.create()).put(tag, subtag)
+    addToTagDirect(registry, tag, ChildKind.Tag(subtag))
+  
+  def addOptionalToTag[T](registry: ResourceKey[? <: Registry[T]], tag: TagKey[T], loc: ResourceLocation): Unit =
+    addToTagDirect(registry, tag, ChildKind.Optional(loc))
 
   def setBlockState(block: Block, func: LumoBlockStateGenerator => Block => Unit): Unit =
     if doDatagen then
