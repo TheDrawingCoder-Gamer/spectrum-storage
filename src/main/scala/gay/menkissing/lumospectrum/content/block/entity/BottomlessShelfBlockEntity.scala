@@ -265,7 +265,7 @@ class BottomlessShelfBlockEntity(pos: BlockPos, state: BlockState) extends Block
       Objects.requireNonNull(this.level).setBlock(this.worldPosition, blockState, 3)
       this.level.gameEvent(GameEvent.BLOCK_CHANGE, this.worldPosition, GameEvent.Context.of(blockState))
     else
-      LumoSpectrum.LOGGER.error("Expected slot to be 0-5, got {}", slot)
+      LumoSpectrum.Logger.error("Expected slot to be 0-5, got {}", slot)
 
   def loadItemFilters(tag: CompoundTag): Unit =
     val listTag = tag.getList(BottomlessShelfBlockEntity.tagItemFilters, 10)

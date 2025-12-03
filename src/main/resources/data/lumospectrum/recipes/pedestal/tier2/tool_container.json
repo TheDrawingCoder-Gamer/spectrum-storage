@@ -1,0 +1,35 @@
+{
+  "type": "spectrum:pedestal",
+  "time": 240,
+  "tier": "simple",
+  "magenta": 0,
+  "yellow": 0,
+  "cyan": 8,
+  "black": 0,
+  "white": 0,
+  "experience": 2.0,
+  "pattern": [
+    "QGQ",
+    "ICI",
+    "QIQ"
+  ],
+  "key": {
+    "Q": {
+      "item": "spectrum:quitoxic_powder"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    }
+  },
+  "result": {
+    "item": "lumospectrum:tool_container",
+    "count": 1
+  },
+  "required_advancement": "lumospectrum:unlocks/items/tool_container"
+}

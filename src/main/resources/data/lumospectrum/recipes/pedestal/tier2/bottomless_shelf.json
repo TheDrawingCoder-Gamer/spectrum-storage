@@ -1,0 +1,29 @@
+{
+  "type": "spectrum:pedestal",
+  "time": 240,
+  "tier": "simple",
+  "magenta": 0,
+  "yellow": 0,
+  "cyan": 8,
+  "black": 0,
+  "white": 0,
+  "experience": 2.0,
+  "pattern": [
+    "WWW",
+    "QQQ",
+    "WWW"
+  ],
+  "key": {
+    "Q": {
+      "item": "spectrum:quitoxic_powder"
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "lumospectrum:bottomless_shelf",
+    "count": 1
+  },
+  "required_advancement": "lumospectrum:unlocks/items/bottomless_shelf"
+}

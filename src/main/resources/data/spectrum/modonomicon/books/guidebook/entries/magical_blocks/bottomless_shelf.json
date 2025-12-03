@@ -1,0 +1,35 @@
+{
+  "name": "block.lumospectrum.bottomless_shelf",
+  "condition": {
+    "type": "modonomicon:advancement",
+    "advancement_id": "lumospectrum:unlocks/items/bottomless_shelf"
+  },
+  "icon": "lumospectrum:bottomless_shelf",
+  "category": "spectrum:magical_blocks",
+  "hide_while_locked": true,
+  "parents": [],
+  "background_u_index": 0,
+  "background_v_index": 0,
+  "x": 2,
+  "y": 2,
+  "pages": [
+    {
+      "type": "modonomicon:spotlight",
+      "item": {
+        "item": "lumospectrum:bottomless_shelf"
+      },
+      "text": "book.lumospectrum.guidebook.bottomless_shelf.page0.text",
+      "title": "item.lumospectrum.bottomless_bottle"
+    },
+    {
+      "type": "spectrum:pedestal_crafting",
+      "text": "book.lumospectrum.guidebook.bottomless_shelf.page1.text",
+      "title": "container.spectrum.rei.pedestal_recipe",
+      "recipe_id": "lumospectrum:pedestal/tier2/bottomless_shelf"
+    },
+    {
+      "type": "modonomicon:text",
+      "text": "book.lumospectrum.guidebook.bottomless_shelf.page2.text"
+    }
+  ]
+}

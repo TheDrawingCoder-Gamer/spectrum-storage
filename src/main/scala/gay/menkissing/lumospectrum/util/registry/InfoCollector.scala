@@ -20,6 +20,7 @@ import gay.menkissing.lumospectrum.util.registry.builder.{BlockBuilder, ItemBuil
 import gay.menkissing.lumospectrum.util.registry.provider.generators.{LumoBlockStateGenerator, LumoItemModelProvider, LumoModelProvider, LumoTagsProvider}
 import LumoTagsProvider.ChildKind
 import gay.menkissing.lumospectrum.LumoSpectrum
+import gay.menkissing.lumospectrum.util.registry.helper.{GuidebookLangHelper, LangHelper}
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.provider.{FabricBlockLootTableProvider, FabricLanguageProvider, FabricTagProvider}
 import net.minecraft.client.model.Model
@@ -82,6 +83,11 @@ class InfoCollector:
     if doDatagen then
       lang(key) = value
     this
+  
+  def bulkAddLangs(idGetter: String => String): LangHelper =
+    LangHelper(this, idGetter)
+  def addGuidebookEntry(entryName: String): GuidebookLangHelper =
+    GuidebookLangHelper(this, entryName)
 
   def addBlockLootTable(block: Block, table: FabricBlockLootTableProvider => LootTable.Builder): InfoCollector =
     if doDatagen then
