@@ -48,6 +48,7 @@ dependencies {
 
     modImplementation "de.dafuqs:spectrum:${project.spectrum_version}"
     modImplementation("com.klikli_dev:modonomicon-${project.minecraft_version}-fabric:${project.modonomicon_version}")
+    modImplementation "maven.modrinth:fractal-lib:${project.fractal_version}"
 
     // Item viewer
     switch (recipe_viewer.toLowerCase(Locale.ROOT)) {

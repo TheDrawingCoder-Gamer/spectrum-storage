@@ -1,10 +1,10 @@
 {
-  "name": "item.lumospectrum.bottomless_bottle",
+  "name": "item.spectrumstorage.bottomless_bottle",
   "condition": {
     "type": "modonomicon:advancement",
-    "advancement_id": "lumospectrum:unlocks/items/bottomless_bottle"
+    "advancement_id": "spectrumstorage:unlocks/items/bottomless_bottle"
   },
-  "icon": "lumospectrum:bottomless_bottle",
+  "icon": "spectrumstorage:bottomless_bottle",
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],
@@ -16,16 +16,16 @@
     {
       "type": "modonomicon:spotlight",
       "item": {
-        "item": "lumospectrum:bottomless_bottle"
+        "item": "spectrumstorage:bottomless_bottle"
       },
-      "text": "book.lumospectrum.guidebook.bottomless_bottle.page0.text",
-      "title": "item.lumospectrum.bottomless_bottle"
+      "text": "book.spectrumstorage.guidebook.bottomless_bottle.page0.text",
+      "title": "item.spectrumstorage.bottomless_bottle"
     },
     {
       "type": "spectrum:pedestal_crafting",
-      "text": "book.lumospectrum.guidebook.bottomless_bottle.page1.text",
+      "text": "book.spectrumstorage.guidebook.bottomless_bottle.page1.text",
       "title": "container.spectrum.rei.pedestal_recipe",
-      "recipe_id": "lumospectrum:pedestal/tier2/bottomless_bottle"
+      "recipe_id": "spectrumstorage:pedestal/tier2/bottomless_bottle"
     },
     {
       "type": "spectrum:nbt_spotlight",
@@ -35,7 +35,7 @@
       },
       "title": "enchantment.minecraft.power",
       "item": {
-        "item": "lumospectrum:bottomless_bottle",
+        "item": "spectrumstorage:bottomless_bottle",
         "nbt": {
           "Enchantments": [
             {
@@ -45,7 +45,7 @@
           ]
         }
       },
-      "text": "book.lumospectrum.guidebook.bottomless_bottle.page2.text"
+      "text": "book.spectrumstorage.guidebook.bottomless_bottle.page2.text"
     }
   ]
 }
