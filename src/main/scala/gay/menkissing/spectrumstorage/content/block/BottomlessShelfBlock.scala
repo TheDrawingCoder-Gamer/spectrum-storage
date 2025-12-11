@@ -96,7 +96,7 @@ class BottomlessShelfBlock(props: BlockBehaviour.Properties) extends BaseEntityB
           if !item.isEmpty then
             Containers.dropItemStack(level, pos.getX, pos.getY, pos.getZ, item)
 
-          blockEntity.clearContent()
+        blockEntity.clearContent()
         true
       case _ => false
 

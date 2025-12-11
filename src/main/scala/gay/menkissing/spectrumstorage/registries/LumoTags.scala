@@ -23,6 +23,7 @@ object LumoTags:
                    .addTag(ItemTags.TOOLS)
                    .add(Items.SPYGLASS)
                    .add(Items.CLOCK)
+                   .add(Items.FLINT_AND_STEEL)
                    .add(SpectrumItems.TUNING_STAMP)
                    .add(SpectrumItems.OMNI_ACCELERATOR)
                    .add(SpectrumItems.CRESCENT_CLOCK)

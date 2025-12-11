@@ -1,7 +1,8 @@
 package gay.menkissing.spectrumstorage.content.block.entity
 
 import de.dafuqs.spectrum.blocks.bottomless_bundle.BottomlessBundleItem
-import de.dafuqs.spectrum.registries.SpectrumItems
+import de.dafuqs.spectrum.enchantments.SpectrumEnchantment
+import de.dafuqs.spectrum.registries.{SpectrumEnchantments, SpectrumItems}
 import gay.menkissing.spectrumstorage.SpectrumStorage
 import gay.menkissing.spectrumstorage.content.block.BottomlessShelfBlock
 import gay.menkissing.spectrumstorage.content.item.BottomlessBottleItem
@@ -12,6 +13,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions
 import net.fabricmc.fabric.api.transfer.v1.storage.base.{CombinedStorage, ResourceAmount, SingleSlotStorage}
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.{BlockPos, NonNullList}
 import net.minecraft.nbt.{CompoundTag, ListTag}
 import net.minecraft.world.entity.player.Player
@@ -351,25 +353,43 @@ object BottomlessShelfBlockEntity:
 
       def patchStack(stack: ItemStack): Unit =
         if stack.is(SpectrumItems.BOTTOMLESS_BUNDLE) then
-          val newStack = BottomlessBundleItem.getWithBlockAndCount(variant.toStack, count.toInt)
-          // ???
-          stack.setTag(newStack.getTag)
+          if this.isEmpty then
+            stack.removeTagKey("StoredStack")
+          else
+            // THIS WOULDNT NEED TO HAPPEN IF WE JUST USED DATA COMPONENTS
+            // OR GOD FORBID USE ItemVariant
+            // God hates us all
+            val storedItemTag = new CompoundTag()
+            val maxStoredAmount = BottomlessBundleItem.getMaxStoredAmount(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, stack))
+            val newAmount = math.min(maxStoredAmount, count.toInt)
+
+            val id = BuiltInRegistries.ITEM.getKey(variant.getItem)
+            storedItemTag.putString("ID", id.toString)
+            storedItemTag.putInt("Count", newAmount)
+            if variant.getNbt != null then
+              storedItemTag.put("Tag", variant.getNbt.copy())
+
+            stack.getOrCreateTag().put("StoredStack", storedItemTag)
+
 
     object Contents:
       val EMPTY: Contents = Contents(ItemVariant.blank(), 0L)
 
     def buildFromStack(stack: ItemStack): Builder =
       val c = contentsFromStack(stack)
-      Builder(c.variant, c.count, BottomlessBundleItem.getMaxStoredAmount(EnchantmentHelper.getEnchantments(stack).getOrDefault(Enchantments.POWER_ARROWS, 0)))
+      Builder(c.variant,
+        c.count,
+        BottomlessBundleItem.getMaxStoredAmount(EnchantmentHelper.getEnchantments(stack).getOrDefault(Enchantments.POWER_ARROWS, 0)),
+        EnchantmentHelper.getItemEnchantmentLevel(SpectrumEnchantments.VOIDING, stack) > 0)
 
-    final class Builder(var template: ItemVariant, var amount: Long, val max: Long):
+    final class Builder(var template: ItemVariant, var amount: Long, val max: Long, val voiding: Boolean):
       def isEmpty: Boolean =
         template.isBlank || amount == 0
 
       // TODO: storing
 
       def copied: Builder =
-        Builder(template, amount, max)
+        Builder(template, amount, max, voiding)
 
       def build: Contents =
         Contents(template, amount)
@@ -377,17 +397,21 @@ object BottomlessShelfBlockEntity:
       def getMaxAllowed(variant: ItemVariant, amount: Long): Long =
         if variant.isBlank || amount <= 0 || (!this.isEmpty && template != variant) then
           0
+        else if voiding then
+          Int.MaxValue
         else
           this.max - this.amount
 
       def insert(variant: ItemVariant, amount: Long): Long =
-        val added = math.min(amount, getMaxAllowed(variant, amount))
+        val added =
+
+          math.min(amount, getMaxAllowed(variant, amount))
         if added == 0 then
           return 0
         if this.isEmpty then
           this.template = variant
 
-        this.amount += math.min(this.max - this.amount, added)
+        this.amount += added
         added
 
       def extract(variant: ItemVariant, amount: Long): Long =
