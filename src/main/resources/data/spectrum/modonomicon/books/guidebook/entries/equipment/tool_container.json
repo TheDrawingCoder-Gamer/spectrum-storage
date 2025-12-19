@@ -1,5 +1,6 @@
 {
   "name": "item.spectrumstorage.tool_container",
+  "description": "book.spectrumstorage.added_by_spectrumstorage",
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrumstorage:unlocks/items/tool_container"

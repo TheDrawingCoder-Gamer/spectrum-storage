@@ -37,4 +37,5 @@ object LumoLang:
                      |""".stripMargin)
                  .addPage("*Don't ask how they all fit*")
                  .save()
+    InfoCollector.instance.addRawLang("book.spectrumstorage.added_by_spectrumstorage", "§oAdded by Spectrum Storage")
 
