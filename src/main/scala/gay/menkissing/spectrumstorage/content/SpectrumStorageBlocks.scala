@@ -4,7 +4,7 @@ import de.dafuqs.fractal.api.ItemSubGroupEvents
 import de.dafuqs.spectrum.api.item_group.ItemGroupIDs
 import gay.menkissing.spectrumstorage.SpectrumStorage
 import gay.menkissing.spectrumstorage.content.block.BottomlessShelfBlock
-import gay.menkissing.spectrumstorage.content.block.entity.BottomlessShelfBlockEntity
+import gay.menkissing.spectrumstorage.content.block.entity.{BottomlessShelfBlockEntity, BottomlessStorageBlockEntity}
 import gay.menkissing.spectrumstorage.util.registry.InfoCollector
 import gay.menkissing.spectrumstorage.util.registry.builder.{BlockBuilder, ItemBuilder}
 import gay.menkissing.spectrumstorage.util.resources.{*, given}
@@ -55,7 +55,7 @@ object SpectrumStorageBlocks:
                  .dropSelf()
                  .registerItemInGroup(ItemGroupIDs.SUBTAB_FUNCTIONAL)
 
-  val bottomlessShelfBlockEntity: BlockEntityType[BottomlessShelfBlockEntity] =
+  val bottomlessShelfBlockEntity: BlockEntityType[BottomlessStorageBlockEntity] =
     makeEntity("bottomless_shelf", (a, b) => BottomlessShelfBlockEntity(a, b), bottomlessShelf)
 
   def init(): Unit =

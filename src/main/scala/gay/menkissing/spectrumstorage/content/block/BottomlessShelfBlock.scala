@@ -2,7 +2,7 @@ package gay.menkissing.spectrumstorage.content.block
 
 import de.dafuqs.spectrum.registries.SpectrumItems
 import gay.menkissing.spectrumstorage.content.SpectrumStorageItems
-import gay.menkissing.spectrumstorage.content.block.entity.BottomlessShelfBlockEntity
+import gay.menkissing.spectrumstorage.content.block.entity.{BottomlessShelfBlockEntity, BottomlessStorageBlockEntity}
 import net.minecraft.core.{BlockPos, Direction}
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.entity.LivingEntity
@@ -72,7 +72,7 @@ class BottomlessShelfBlock(props: BlockBehaviour.Properties) extends BaseEntityB
             if state.getValue(BottomlessShelfBlock.SHELF_SLOT_OCCUPIED_PROPS(slot)).isEmpty then
               InteractionResult.CONSUME
             else
-              BottomlessShelfBlock.removeContainer(level, pos, player, blockEntity, slot)
+              BottomlessStorageBlockEntity.removeContainer(level, pos, player, blockEntity, slot)
               InteractionResult.sidedSuccess(level.isClientSide)
       case _ => InteractionResult.PASS
 
