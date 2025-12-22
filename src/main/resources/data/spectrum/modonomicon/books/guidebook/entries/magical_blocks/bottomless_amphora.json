@@ -1,0 +1,36 @@
+{
+  "name": "block.spectrumstorage.bottomless_amphora",
+  "description": "book.spectrumstorage.added_by_spectrumstorage",
+  "condition": {
+    "type": "modonomicon:advancement",
+    "advancement_id": "spectrumstorage:unlocks/blocks/bottomless_amphora"
+  },
+  "icon": "spectrumstorage:bottomless_amphora",
+  "category": "spectrum:magical_blocks",
+  "hide_while_locked": true,
+  "parents": [],
+  "background_u_index": 0,
+  "background_v_index": 0,
+  "x": 4,
+  "y": 2,
+  "pages": [
+    {
+      "type": "modonomicon:spotlight",
+      "item": {
+        "item": "spectrumstorage:bottomless_amphora"
+      },
+      "text": "book.spectrumstorage.guidebook.bottomless_amphora.page0.text",
+      "title": "block.spectrumstorage.bottomless_amphora"
+    },
+    {
+      "type": "spectrum:pedestal_crafting",
+      "text": "book.spectrumstorage.guidebook.bottomless_amphora.page1.text",
+      "title": "container.spectrum.rei.pedestal_recipe",
+      "recipe_id": "spectrumstorage:pedestal/tier4/bottomless_amphora"
+    },
+    {
+      "type": "modonomicon:text",
+      "text": "book.spectrumstorage.guidebook.bottomless_amphora.page2.text"
+    }
+  ]
+}

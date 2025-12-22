@@ -3,7 +3,7 @@
   "description": "book.spectrumstorage.added_by_spectrumstorage",
   "condition": {
     "type": "modonomicon:advancement",
-    "advancement_id": "spectrumstorage:unlocks/items/bottomless_shelf"
+    "advancement_id": "spectrumstorage:unlocks/blocks/bottomless_shelf"
   },
   "icon": "spectrumstorage:bottomless_shelf",
   "category": "spectrum:magical_blocks",
@@ -20,7 +20,7 @@
         "item": "spectrumstorage:bottomless_shelf"
       },
       "text": "book.spectrumstorage.guidebook.bottomless_shelf.page0.text",
-      "title": "item.spectrumstorage.bottomless_bottle"
+      "title": "block.spectrumstorage.bottomless_shelf"
     },
     {
       "type": "spectrum:pedestal_crafting",

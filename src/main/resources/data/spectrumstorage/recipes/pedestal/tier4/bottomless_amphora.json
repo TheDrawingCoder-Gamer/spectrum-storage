@@ -1,0 +1,35 @@
+{
+  "type": "spectrum:pedestal",
+  "time": 3600,
+  "tier": "complex",
+  "magenta": 0,
+  "yellow": 0,
+  "cyan": 6,
+  "black": 2,
+  "white": 2,
+  "experience": 2.0,
+  "pattern": [
+    "CSC",
+    "QAQ",
+    "QQQ"
+  ],
+  "key": {
+    "Q": {
+      "item": "spectrum:quitoxic_powder"
+    },
+    "S": {
+      "item": "spectrum:stratine_gem"
+    },
+    "A": {
+      "tag": "spectrum:noxwood_amphoras"
+    },
+    "C": {
+      "item": "spectrum:cyan_pigment"
+    }
+  },
+  "result": {
+    "item": "spectrumstorage:bottomless_amphora",
+    "count": 1
+  },
+  "required_advancement": "spectrumstorage:unlocks/blocks/bottomless_amphora"
+}

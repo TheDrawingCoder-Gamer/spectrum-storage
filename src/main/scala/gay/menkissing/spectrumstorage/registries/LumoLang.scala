@@ -28,6 +28,37 @@ object LumoLang:
                      |A bottomless shelf will remember what items and fluids were inside its items, meaning you can use it as a filter.
                      |""".stripMargin)
                  .save()
+    InfoCollector.instance.addGuidebookEntry("bottomless_barrel")
+                 .addPage(
+                   """
+                     |While bottomless shelves are great, I find myself making complicated systems to access many of them.
+                     |It would be nice if I could compact them even more.
+                     |
+                     |The bottomless barrel does just that - it can hold up to 27 bottomless bundles or bottles.
+                     |""".stripMargin
+                 )
+                 .addPage("*That's a lot of stuff*")
+                 .addPage(
+                   """
+                     |Just like the bottomless shelf, the bottomless barrel will remember what items and fluids were inside its items, meaning you can use it as a filter
+                     |""".stripMargin
+                 )
+                 .save()
+    InfoCollector.instance.addGuidebookEntry("bottomless_amphora")
+                 .addPage(
+                   """
+                     |I had thought that barrels could store a lot, but amphoras can store double that. So if I make a bottomless amphora...
+                     |
+                     |The bottomless amphora can store a whopping 54 bottomless bundles or bottles inside of it!
+                     |""".stripMargin
+                 )
+                 .addPage("*This is getting absurd*")
+                 .addPage(
+                   """
+                     |Just like the bottomless shelf and bottomless barrel before it, the bottomless amphora remembers what items and fluids were inside its items, meaning you can use it as a filter.
+                     |""".stripMargin
+                 )
+                 .save()
     InfoCollector.instance.addGuidebookEntry("tool_container")
                  .addPage(
                    """

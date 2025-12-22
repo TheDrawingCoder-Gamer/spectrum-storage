@@ -1,0 +1,36 @@
+{
+  "name": "block.spectrumstorage.bottomless_barrel",
+  "description": "book.spectrumstorage.added_by_spectrumstorage",
+  "condition": {
+    "type": "modonomicon:advancement",
+    "advancement_id": "spectrumstorage:unlocks/blocks/bottomless_barrel"
+  },
+  "icon": "spectrumstorage:bottomless_barrel",
+  "category": "spectrum:magical_blocks",
+  "hide_while_locked": true,
+  "parents": [],
+  "background_u_index": 0,
+  "background_v_index": 0,
+  "x": 3,
+  "y": 2,
+  "pages": [
+    {
+      "type": "modonomicon:spotlight",
+      "item": {
+        "item": "spectrumstorage:bottomless_barrel"
+      },
+      "text": "book.spectrumstorage.guidebook.bottomless_barrel.page0.text",
+      "title": "block.spectrumstorage.bottomless_barrel"
+    },
+    {
+      "type": "spectrum:pedestal_crafting",
+      "text": "book.spectrumstorage.guidebook.bottomless_barrel.page1.text",
+      "title": "container.spectrum.rei.pedestal_recipe",
+      "recipe_id": "spectrumstorage:pedestal/tier3/bottomless_barrel"
+    },
+    {
+      "type": "modonomicon:text",
+      "text": "book.spectrumstorage.guidebook.bottomless_barrel.page2.text"
+    }
+  ]
+}
