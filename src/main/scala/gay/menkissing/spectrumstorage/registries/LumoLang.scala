@@ -38,4 +38,8 @@ object LumoLang:
                  .addPage("*Don't ask how they all fit*")
                  .save()
     InfoCollector.instance.addRawLang("book.spectrumstorage.added_by_spectrumstorage", "§oAdded by Spectrum Storage")
+    InfoCollector.instance.bulkAddLangs(it => s"container.spectrumstorage.$it")
+                 .lang("bottomless_barrel", "Bottomless Barrel")
+                 .lang("bottomless_amphora", "Bottomless Amphora")
+                 .save()
 

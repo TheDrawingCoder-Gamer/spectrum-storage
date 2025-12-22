@@ -69,6 +69,9 @@ class LumoModelProvider(val output: FabricDataOutput):
   def cubeAll[T: ModelResourceLike](name: T, texture: ResourceLocation): LumoModelBuilder =
     singleTexture(name, new ResourceLocation("minecraft", "block/cube_all"), "all", texture)
 
+  def cubeBottomTop[T: ModelResourceLike](name: T, side: ResourceLocation, bottom: ResourceLocation, top: ResourceLocation): LumoModelBuilder =
+    sideBottomTop(name, ResourceLocationExt.withDefaultNamespace("block/cube_bottom_top"), side, bottom, top)
+  
   def sideBottomTop[T: ModelResourceLike](name: T, parent: ResourceLocation, side: ResourceLocation, bottom: ResourceLocation, top: ResourceLocation): LumoModelBuilder =
     withExistingParent(name, parent)
       .texture("side", side)

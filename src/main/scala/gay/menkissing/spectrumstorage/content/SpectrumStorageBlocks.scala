@@ -3,7 +3,8 @@ package gay.menkissing.spectrumstorage.content
 import de.dafuqs.fractal.api.ItemSubGroupEvents
 import de.dafuqs.spectrum.api.item_group.ItemGroupIDs
 import gay.menkissing.spectrumstorage.SpectrumStorage
-import gay.menkissing.spectrumstorage.content.block.BottomlessShelfBlock
+import gay.menkissing.spectrumstorage.content.block.BottomlessStorageBlock.{BottomlessAmphoraBlock, BottomlessBarrelBlock}
+import gay.menkissing.spectrumstorage.content.block.{BottomlessShelfBlock, BottomlessStorageBlock}
 import gay.menkissing.spectrumstorage.content.block.entity.{BottomlessShelfBlockEntity, BottomlessStorageBlockEntity}
 import gay.menkissing.spectrumstorage.util.registry.InfoCollector
 import gay.menkissing.spectrumstorage.util.registry.builder.{BlockBuilder, ItemBuilder}
@@ -55,11 +56,36 @@ object SpectrumStorageBlocks:
                  .dropSelf()
                  .registerItemInGroup(ItemGroupIDs.SUBTAB_FUNCTIONAL)
 
+  val bottomlessBarrel: Block =
+    InfoCollector.instance.block(SpectrumStorage.locate("bottomless_barrel"),
+      BottomlessBarrelBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(1.5f)))
+                 .lang("Bottomless Barrel")
+                 .tag(BlockTags.MINEABLE_WITH_AXE)
+                 .simpleItem()
+                 .dropSelf()
+                 .blockstate(gen => block => gen.barrelBlock(block))
+                 .registerItemInGroup(ItemGroupIDs.SUBTAB_FUNCTIONAL)
+
+  val bottomlessAmphora: Block =
+    InfoCollector.instance.block(SpectrumStorage.locate("bottomless_amphora"),
+      BottomlessAmphoraBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(4.0f)))
+                 .lang("Bottomless Amphora")
+                 .tag(BlockTags.MINEABLE_WITH_AXE)
+                 .simpleItem()
+                 .dropSelf()
+                 .blockstate(gen => block => gen.barrelBlock(block))
+                 .registerItemInGroup(ItemGroupIDs.SUBTAB_FUNCTIONAL)
+
   val bottomlessShelfBlockEntity: BlockEntityType[BottomlessStorageBlockEntity] =
     makeEntity("bottomless_shelf", (a, b) => BottomlessShelfBlockEntity(a, b), bottomlessShelf)
+  val bottomlessBarrelBlockEntity: BlockEntityType[BottomlessStorageBlockEntity] =
+    makeEntity("bottomless_barrel", (a, b) => BottomlessStorageBlockEntity.BottomlessBarrelBlockEntity(a, b), bottomlessBarrel)
+  val bottomlessAmphoraBlockEntity: BlockEntityType[BottomlessStorageBlockEntity] =
+    makeEntity("bottomless_amphora", (a, b) => BottomlessStorageBlockEntity.BottomlessAmphoraBlockEntity(a, b), bottomlessAmphora)
+
 
   def init(): Unit =
-    BottomlessShelfBlockEntity.registerStorages()
+    BottomlessStorageBlockEntity.registerStorages()
     blockItems.foreach: (key, items) =>
       ItemSubGroupEvents.modifyEntriesEvent(key).register: entries =>
         items.foreach(entries.accept)

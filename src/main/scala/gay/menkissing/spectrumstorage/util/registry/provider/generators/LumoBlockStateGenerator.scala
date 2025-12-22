@@ -27,6 +27,7 @@ import net.minecraft.data.models.blockstates.{BlockStateGenerator, Condition, Mu
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.{Block, ButtonBlock, DoorBlock, FenceGateBlock, PipeBlock, PressurePlateBlock, RotatedPillarBlock, SlabBlock, StairBlock, TrapDoorBlock}
 import gay.menkissing.spectrumstorage.util.resources.{*, given}
+import net.minecraft.core.Direction
 import net.minecraft.world.level.block.state.properties.{AttachFace, BlockStateProperties, DoorHingeSide, DoubleBlockHalf, Half, SlabType, StairsShape}
 
 import java.util.concurrent.CompletableFuture
@@ -48,6 +49,33 @@ abstract class LumoBlockStateGenerator(val output: FabricDataOutput) extends Dat
   private def blockTexture(block: Block): ResourceLocation =
     val key = BuiltInRegistries.BLOCK.getKey(block)
     ResourceLocationExt.fromNamespaceAndPath(key.getNamespace, "block/" + key.getPath)
+
+  def createColumnWithFacing(): PropertyDispatch =
+    import VariantProperties.Rotation
+    PropertyDispatch.property(BlockStateProperties.FACING)
+                    .select(Direction.DOWN, Variant.variant().`with`(VariantProperties.X_ROT, Rotation.R180))
+                    .select(Direction.UP, Variant.variant())
+                    .select(Direction.NORTH, Variant.variant().`with`(VariantProperties.X_ROT, Rotation.R90))
+                    .select(Direction.SOUTH, Variant.variant().`with`(VariantProperties.X_ROT, Rotation.R90)
+                                                    .`with`(VariantProperties.Y_ROT, Rotation.R180))
+                    .select(Direction.WEST, Variant.variant().`with`(VariantProperties.X_ROT, Rotation.R90)
+                                                   .`with`(VariantProperties.Y_ROT, Rotation.R270))
+                    .select(Direction.EAST, Variant.variant().`with`(VariantProperties.X_ROT, Rotation.R90)
+                                                   .`with`(VariantProperties.Y_ROT, Rotation.R90))
+    
+  def barrelBlock(block: Block): Unit =
+    val sideTexture = blockTexture(block).withSuffix("_side")
+    val topTexture = blockTexture(block).withSuffix("_top")
+    val bottomTexture = blockTexture(block).withSuffix("_bottom")
+    barrelBlock(block, sideTexture, topTexture, bottomTexture)
+  def barrelBlock(block: Block, side: ResourceLocation, top: ResourceLocation, bottom: ResourceLocation): Unit =
+    val closeModel = models.cubeBottomTop(block, side, bottom, top)
+    val openModel = models.cubeBottomTop(block.modelLoc.withSuffix("_open"), side, bottom, top.withSuffix("_open"))
+    blockStates(block) =
+      MultiVariantGenerator.multiVariant(block).`with`(createColumnWithFacing()).`with`:
+        PropertyDispatch.property(BlockStateProperties.OPEN)
+          .select(false, Variant.variant().`with`(VariantProperties.MODEL, closeModel.location))
+          .select(true, Variant.variant().`with`(VariantProperties.MODEL, openModel.location))
 
   def crossBlock(block: Block, texture: ResourceLocation): Unit =
     val model = models.cross(block, texture)

@@ -6,6 +6,7 @@ import gay.menkissing.spectrumstorage.content.{SpectrumStorageBlocks, SpectrumSt
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.gameevent.GameEvent
 
@@ -33,12 +34,3 @@ class BottomlessShelfBlockEntity(pos: BlockPos, state: BlockState) extends Botto
       this.level.gameEvent(GameEvent.BLOCK_CHANGE, this.worldPosition, GameEvent.Context.of(blockState))
     else
       SpectrumStorage.Logger.error("Expected slot to be 0-5, got {}", slot)
-
-object BottomlessShelfBlockEntity:
-  def registerStorages(): Unit =
-    FluidStorage.SIDED.registerForBlockEntity[BottomlessStorageBlockEntity]((cooler, dir) => {
-      cooler.fluidStorage
-    }, SpectrumStorageBlocks.bottomlessShelfBlockEntity)
-    ItemStorage.SIDED.registerForBlockEntity[BottomlessStorageBlockEntity]((cooler, dir) => {
-      cooler.itemStorage
-    }, SpectrumStorageBlocks.bottomlessShelfBlockEntity)

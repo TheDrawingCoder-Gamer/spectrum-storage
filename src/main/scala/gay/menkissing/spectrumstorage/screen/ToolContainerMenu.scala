@@ -31,10 +31,10 @@ class ToolContainerMenu(windowId: Int, playerInv: Inventory, val box: ItemStack)
       })
 
     for
-      i <- 0 until ToolContainerMenu.playerRows
-      j <- 0 until ToolContainerMenu.playerColumns
+      i <- 0 until ScreenCommon.playerRows
+      j <- 0 until ScreenCommon.playerColumns
     do
-      addSlot(new Slot(playerInv, j + i * ToolContainerMenu.playerColumns + 9, 8 + j * 18, 103 + i * 18 + k))
+      addSlot(new Slot(playerInv, j + i * ScreenCommon.playerColumns + 9, 8 + j * 18, 103 + i * 18 + k))
 
     for
       i <- 0 until 9
@@ -83,8 +83,6 @@ class ToolContainerMenu(windowId: Int, playerInv: Inventory, val box: ItemStack)
 object ToolContainerMenu:
   val rows = 5
   val columns = 9
-  val playerRows = 3
-  val playerColumns = 9
   val containerSize = rows * columns
 
   def fromNetwork(windowId: Int, inv: Inventory, buf: FriendlyByteBuf): ToolContainerMenu =
