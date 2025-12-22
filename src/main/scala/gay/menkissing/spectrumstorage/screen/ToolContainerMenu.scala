@@ -61,9 +61,9 @@ class ToolContainerMenu(windowId: Int, playerInv: Inventory, val box: ItemStack)
       if i < boxEnd then
         if !moveItemStackTo(slotStack, boxEnd, invEnd, true) then
           return ItemStack.EMPTY
-        else
-          if !slotStack.isEmpty && isValidItem(slotStack) && !moveItemStackTo(slotStack, boxStart, boxEnd, false) then
-            return ItemStack.EMPTY
+      else
+        if !slotStack.isEmpty && isValidItem(slotStack) && !moveItemStackTo(slotStack, boxStart, boxEnd, false) then
+          return ItemStack.EMPTY
 
       if slotStack.isEmpty then
         slot.setByPlayer(ItemStack.EMPTY)
