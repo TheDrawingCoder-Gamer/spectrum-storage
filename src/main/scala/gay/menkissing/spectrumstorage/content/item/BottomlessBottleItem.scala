@@ -164,7 +164,7 @@ class BottomlessBottleItem(props: Item.Properties) extends Item(props), Extended
         InteractionResultHolder.fail(stack)
 
 object BottomlessBottleItem:
-  val baseMax: Long = FluidConstants.BUCKET * 128
+  val baseMax: Long = FluidConstants.BUCKET * 256
 
   @nowarn("msg=eta")
   def registerCauldronInteractions(): Unit =
@@ -173,7 +173,7 @@ object BottomlessBottleItem:
     CauldronInteraction.WATER.put(SpectrumStorageItems.bottomlessBottle, fillBottleInteraction(Fluids.WATER))
 
   def maxAllowed(level: Int): Long =
-    baseMax * math.pow(2, math.min(level, 5)).toLong
+    baseMax * math.pow(8, math.min(level, 5)).toLong
   def getMaxStackExpensive(stack: ItemStack): Long =
     maxAllowed(EnchantmentHelper.getEnchantments(stack).getOrDefault(Enchantments.POWER_ARROWS, 0))
 

@@ -13,7 +13,7 @@ object LumoLang:
                      |The bottomless bottle does just that - it stores a large amount of liquid inside itself.
                      |""".stripMargin)
                  .addPage("Right-click picks up liquid, while sneak right-click places it.")
-                 .addPage("Power doubles its capacity each level.")
+                 .addPage("Power increases its capacity eightfold each level.")
                  .save()
     InfoCollector.instance.addGuidebookEntry("bottomless_shelf")
                  .addPage(
