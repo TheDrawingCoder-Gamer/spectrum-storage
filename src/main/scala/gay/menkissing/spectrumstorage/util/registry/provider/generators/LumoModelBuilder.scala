@@ -21,7 +21,7 @@ import net.minecraft.resources.ResourceLocation
 import java.util.function.Supplier
 import scala.collection.mutable
 
-class LumoModelBuilder(val location: ResourceLocation) extends LumoModelFile, Supplier[JsonElement]:
+class LumoModelBuilder(val location: ResourceLocation) extends LumoModelGeneratedFile, Supplier[JsonElement]:
   protected var curParent: ResourceLocation = null
 
   protected val curTextures: mutable.Map[String, String] = mutable.HashMap()

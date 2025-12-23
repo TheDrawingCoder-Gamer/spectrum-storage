@@ -6,6 +6,7 @@ import gay.menkissing.spectrumstorage.SpectrumStorage
 import gay.menkissing.spectrumstorage.content.block.BottomlessStorageBlock.{BottomlessAmphoraBlock, BottomlessBarrelBlock}
 import gay.menkissing.spectrumstorage.content.block.{BottomlessShelfBlock, BottomlessStorageBlock}
 import gay.menkissing.spectrumstorage.content.block.entity.{BottomlessShelfBlockEntity, BottomlessStorageBlockEntity}
+import gay.menkissing.spectrumstorage.datagen.ComplexBlockstateDatagen
 import gay.menkissing.spectrumstorage.util.registry.InfoCollector
 import gay.menkissing.spectrumstorage.util.registry.builder.{BlockBuilder, ItemBuilder}
 import gay.menkissing.spectrumstorage.util.resources.{*, given}
@@ -54,6 +55,7 @@ object SpectrumStorageBlocks:
                  .model(gen => item => gen.withExistingParent(item, bottomlessShelf.modelLoc.withSuffix("_inventory"))).build()
                  .tag(BlockTags.MINEABLE_WITH_AXE)
                  .dropSelf()
+                 .blockstate(ComplexBlockstateDatagen.BottomlessShelf.genBottomlessShelf)
                  .registerItemInGroup(ItemGroupIDs.SUBTAB_FUNCTIONAL)
 
   val bottomlessBarrel: Block =

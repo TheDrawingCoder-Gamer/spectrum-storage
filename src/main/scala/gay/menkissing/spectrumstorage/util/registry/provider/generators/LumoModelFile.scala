@@ -15,10 +15,13 @@
 
 package gay.menkissing.spectrumstorage.util.registry.provider.generators
 
+import com.google.gson.JsonObject
 import net.minecraft.resources.ResourceLocation
 
 trait LumoModelFile:
   def location: ResourceLocation
   
+trait LumoModelGeneratedFile extends LumoModelFile:
+  def toJson: JsonObject
 
 class ExistingModelFile(val location: ResourceLocation) extends LumoModelFile

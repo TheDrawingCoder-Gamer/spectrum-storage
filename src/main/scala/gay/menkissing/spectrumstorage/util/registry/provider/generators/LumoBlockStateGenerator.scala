@@ -74,8 +74,8 @@ abstract class LumoBlockStateGenerator(val output: FabricDataOutput) extends Dat
     blockStates(block) =
       MultiVariantGenerator.multiVariant(block).`with`(createColumnWithFacing()).`with`:
         PropertyDispatch.property(BlockStateProperties.OPEN)
-          .select(false, Variant.variant().`with`(VariantProperties.MODEL, closeModel.location))
-          .select(true, Variant.variant().`with`(VariantProperties.MODEL, openModel.location))
+          .select(false, VariantHelpers.ofModel(closeModel.location))
+          .select(true, VariantHelpers.ofModel(openModel.location))
 
   def crossBlock(block: Block, texture: ResourceLocation): Unit =
     val model = models.cross(block, texture)

@@ -31,7 +31,7 @@ import scala.collection.mutable
 import gay.menkissing.spectrumstorage.util.resources.{given, *}
 
 class LumoModelProvider(val output: FabricDataOutput):
-  val generatedModels: mutable.Map[ResourceLocation, LumoModelBuilder] = mutable.HashMap()
+  val generatedModels: mutable.Map[ResourceLocation, LumoModelGeneratedFile] = mutable.HashMap()
 
   def blockModelLoc(block: Block): ResourceLocation =
     val name = BuiltInRegistries.BLOCK.getKey(block)
@@ -41,14 +41,20 @@ class LumoModelProvider(val output: FabricDataOutput):
     val name = BuiltInRegistries.BLOCK.getKey(block)
     new ResourceLocation(name.getNamespace, "block/" + name.getPath)
 
-  def getBuilder[T: ModelResourceLike](path: T): LumoModelBuilder =
-    generatedModels.getOrElseUpdate(path.modelLoc, LumoModelBuilder(path.modelLoc))
+  def makeBuilder[T: ModelResourceLike](path: T): LumoModelBuilder =
+    assert(!generatedModels.contains(path.modelLoc))
+    val builder = LumoModelBuilder(path.modelLoc)
+    generatedModels(path.modelLoc) = builder
+    builder
+  
+  //def getBuilder[T: ModelResourceLike](path: T): LumoModelBuilder =
+  //  generatedModels.getOrElseUpdate(path.modelLoc, LumoModelBuilder(path.modelLoc))
 
   def flatItem[T: ModelResourceLike](name: T, texture: ResourceLocation): LumoModelBuilder =
     withExistingParent(name, new ResourceLocation("minecraft", "item/generated")).texture("layer0", texture)
 
   def withExistingParent[T: ModelResourceLike](name: T, parent: ResourceLocation): LumoModelBuilder =
-    getBuilder(name).parent(parent)
+    makeBuilder(name).parent(parent)
 
   def withExistingParent[T: ModelResourceLike](name: T, parent: String): LumoModelBuilder =
     withExistingParent(name, new ResourceLocation("minecraft", parent))
@@ -119,7 +125,7 @@ class LumoModelProvider(val output: FabricDataOutput):
     singleTexture(name, ResourceLocationExt.withDefaultNamespace("block/pressure_plate_down"), texture)
 
   def sign[T: ModelResourceLike](name: T, texture: ResourceLocation): LumoModelBuilder =
-    getBuilder(name).texture("particle", texture)
+    makeBuilder(name).texture("particle", texture)
 
   def fencePost[T: ModelResourceLike](name: T, texture: ResourceLocation): LumoModelBuilder =
     singleTexture(name, ResourceLocationExt.withDefaultNamespace("block/fence_post"), texture)
@@ -202,6 +208,9 @@ class LumoModelProvider(val output: FabricDataOutput):
       }.toSeq *
     )
 
-  protected def getPath(model: LumoModelBuilder): Path =
+  def addRaw(id: ResourceLocation, data: Supplier[JsonElement]): Unit =
+    this.generatedModels(id) = WrappedLumoModel(id, data)
+
+  protected def getPath(model: LumoModelFile): Path =
     val loc = model.location
     this.output.getOutputFolder(PackOutput.Target.RESOURCE_PACK).resolve(loc.getNamespace).resolve("models").resolve(loc.getPath + ".json")

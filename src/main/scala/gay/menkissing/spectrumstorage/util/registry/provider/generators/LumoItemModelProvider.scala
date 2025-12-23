@@ -35,7 +35,7 @@ class LumoItemModelProvider(output: FabricDataOutput) extends LumoModelProvider(
   def blockItem(block: ResourceLocation): LumoModelBuilder =
     val newLoc = ResourceLocationExt
       .fromNamespaceAndPath(block.getNamespace, "item/" + block.getPath.stripPrefix("block/"))
-    getBuilder(newLoc)
+    makeBuilder(newLoc)
       .parent(block)
     
 

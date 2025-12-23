@@ -15,8 +15,9 @@
 
 package gay.menkissing.spectrumstorage.util
 
-import net.minecraft.data.models.blockstates.{Variant, VariantProperties}
+import net.minecraft.data.models.blockstates.{Condition, Variant, VariantProperties}
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.state.properties.Property
 
 object VariantHelpers:
   class Builder(model: ResourceLocation):
@@ -27,9 +28,16 @@ object VariantHelpers:
     def xRot(rot: Int): this.type =
       variant.`with`(VariantProperties.X_ROT, VariantProperties.Rotation.values()((rot % 360) / 90))
       this
+    def xRot(rot: VariantProperties.Rotation): this.type =
+      variant.`with`(VariantProperties.X_ROT, rot)
+      this
 
     def yRot(rot: Int): this.type =
       variant.`with`(VariantProperties.Y_ROT, VariantProperties.Rotation.values()((rot % 360) / 90))
+      this
+    
+    def yRot(rot: VariantProperties.Rotation): this.type =
+      variant.`with`(VariantProperties.Y_ROT, rot)
       this
 
     def uvLock(lock: Boolean): this.type =
@@ -38,3 +46,7 @@ object VariantHelpers:
 
   def ofModel(model: ResourceLocation): Variant =
     Variant.variant().`with`(VariantProperties.MODEL, model)
+    
+  extension[T <: Comparable[T]] (prop: Property[T])
+    def conditionWhen(value: T): Condition.TerminalCondition =
+      Condition.condition().term(prop, value)
