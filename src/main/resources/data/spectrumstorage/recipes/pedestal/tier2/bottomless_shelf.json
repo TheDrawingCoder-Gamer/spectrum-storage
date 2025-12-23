@@ -1,6 +1,6 @@
 {
   "type": "spectrum:pedestal",
-  "time": 240,
+  "time": 600,
   "tier": "simple",
   "magenta": 0,
   "yellow": 0,
