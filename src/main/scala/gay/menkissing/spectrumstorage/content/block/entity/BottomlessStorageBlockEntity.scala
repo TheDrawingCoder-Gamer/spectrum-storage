@@ -55,11 +55,13 @@ abstract class BottomlessStorageBlockEntity(val capacity: Int, baseEntity: Block
     def resetVariant(): Unit = filter = ItemVariant.blank()
 
     def validVariant(storedVariant: ItemVariant, resource: ItemVariant): Boolean =
-      if filter.isBlank && !storedVariant.isBlank then
-        filter = storedVariant
+      if !storedVariant.isBlank && !filter.isBlank && filter != storedVariant then
+        SpectrumStorage.Logger.debug("Player must have modified the bundle manually, updating filter")
 
       if !storedVariant.isBlank then
-        assert(storedVariant == filter)
+        filter = storedVariant
+
+
 
       filter.isBlank || filter == resource
 
@@ -153,6 +155,8 @@ abstract class BottomlessStorageBlockEntity(val capacity: Int, baseEntity: Block
       if filter.isBlank && !storedVariant.isBlank then
         filter = storedVariant
 
+      // This assertion still works for fluids because players cant manipulate the bottle without removing and reinserting it,
+      // and when they do that the filter will be reinspected anyway
       if !storedVariant.isBlank then
         assert(storedVariant == filter)
 
