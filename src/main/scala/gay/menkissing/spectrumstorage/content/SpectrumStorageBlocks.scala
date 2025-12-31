@@ -77,11 +77,11 @@ object SpectrumStorageBlocks:
                  .dropSelf()
                  .blockstate(gen => block => gen.barrelBlock(block))
                  .registerItemInGroup(ItemGroupIDs.SUBTAB_FUNCTIONAL)
-  
+
   val filterChest: Block =
     InfoCollector.instance.block(SpectrumStorage.locate("filter_chest"),
       FilterChestBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(4.0f)))
-                 .lang("Filter Chest")
+                 .lang("Filter Barrel")
                  .tag(BlockTags.MINEABLE_WITH_AXE)
                  .simpleItem()
                  .dropSelf()

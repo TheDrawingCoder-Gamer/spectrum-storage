@@ -68,10 +68,19 @@ object LumoLang:
                      |""".stripMargin)
                  .addPage("*Don't ask how they all fit*")
                  .save()
+    InfoCollector.instance.addGuidebookEntry("filter_chest")
+                 .addPage(
+                   """
+                     |The machines I build to sort my vast catalog of items tend to get quite large. It would be nice to have something that easily filters them.
+                     |
+                     |The filter barrel can filter up to 18 unique items, but it can only hold 9 stacks of items. It will only allow insertion of items if they are in its filter.
+                     |""".stripMargin)
+                 .addPage("*Filter? I hardly know her*")
+                 .save()
     InfoCollector.instance.addRawLang("book.spectrumstorage.added_by_spectrumstorage", "§oAdded by Spectrum Storage")
     InfoCollector.instance.bulkAddLangs(it => s"container.spectrumstorage.$it")
                  .lang("bottomless_barrel", "Bottomless Barrel")
                  .lang("bottomless_amphora", "Bottomless Amphora")
-                 .lang("filter_chest", "Filter Chest")
+                 .lang("filter_chest", "Filter Barrel")
                  .save()
 

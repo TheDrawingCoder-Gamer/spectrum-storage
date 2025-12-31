@@ -1,0 +1,32 @@
+{
+  "name": "block.spectrumstorage.filter_chest",
+  "description": "book.spectrumstorage.added_by_spectrumstorage",
+  "condition": {
+    "type": "modonomicon:advancement",
+    "advancement_id": "spectrumstorage:unlocks/blocks/filter_chest"
+  },
+  "icon": "spectrumstorage:filter_chest",
+  "category": "spectrum:magical_blocks",
+  "hide_while_locked": true,
+  "parents": [],
+  "background_u_index": 0,
+  "background_v_index": 0,
+  "x": 0,
+  "y": 4,
+  "pages": [
+    {
+      "type": "modonomicon:spotlight",
+      "item": {
+        "item": "spectrumstorage:filter_chest"
+      },
+      "text": "book.spectrumstorage.guidebook.filter_chest.page0.text",
+      "title": "block.spectrumstorage.filter_chest"
+    },
+    {
+      "type": "spectrum:pedestal_crafting",
+      "text": "book.spectrumstorage.guidebook.filter_chest.page1.text",
+      "title": "container.spectrum.rei.pedestal_recipe",
+      "recipe_id": "spectrumstorage:pedestal/tier3/filter_chest"
+    }
+  ]
+}
