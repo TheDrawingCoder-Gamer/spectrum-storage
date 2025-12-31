@@ -4,8 +4,8 @@ import de.dafuqs.fractal.api.ItemSubGroupEvents
 import de.dafuqs.spectrum.api.item_group.ItemGroupIDs
 import gay.menkissing.spectrumstorage.SpectrumStorage
 import gay.menkissing.spectrumstorage.content.block.BottomlessStorageBlock.{BottomlessAmphoraBlock, BottomlessBarrelBlock}
-import gay.menkissing.spectrumstorage.content.block.{BottomlessShelfBlock, BottomlessStorageBlock}
-import gay.menkissing.spectrumstorage.content.block.entity.{BottomlessShelfBlockEntity, BottomlessStorageBlockEntity}
+import gay.menkissing.spectrumstorage.content.block.{BottomlessShelfBlock, BottomlessStorageBlock, FilterChestBlock}
+import gay.menkissing.spectrumstorage.content.block.entity.{BottomlessShelfBlockEntity, BottomlessStorageBlockEntity, FilterChestBlockEntity}
 import gay.menkissing.spectrumstorage.datagen.ComplexBlockstateDatagen
 import gay.menkissing.spectrumstorage.util.registry.InfoCollector
 import gay.menkissing.spectrumstorage.util.registry.builder.{BlockBuilder, ItemBuilder}
@@ -77,6 +77,16 @@ object SpectrumStorageBlocks:
                  .dropSelf()
                  .blockstate(gen => block => gen.barrelBlock(block))
                  .registerItemInGroup(ItemGroupIDs.SUBTAB_FUNCTIONAL)
+  
+  val filterChest: Block =
+    InfoCollector.instance.block(SpectrumStorage.locate("filter_chest"),
+      FilterChestBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(4.0f)))
+                 .lang("Filter Chest")
+                 .tag(BlockTags.MINEABLE_WITH_AXE)
+                 .simpleItem()
+                 .dropSelf()
+                 .blockstate(gen => block => gen.barrelBlock(block))
+                 .registerItemInGroup(ItemGroupIDs.SUBTAB_FUNCTIONAL)
 
   val bottomlessShelfBlockEntity: BlockEntityType[BottomlessStorageBlockEntity] =
     makeEntity("bottomless_shelf", (a, b) => BottomlessShelfBlockEntity(a, b), bottomlessShelf)
@@ -85,6 +95,8 @@ object SpectrumStorageBlocks:
   val bottomlessAmphoraBlockEntity: BlockEntityType[BottomlessStorageBlockEntity] =
     makeEntity("bottomless_amphora", (a, b) => BottomlessStorageBlockEntity.BottomlessAmphoraBlockEntity(a, b), bottomlessAmphora)
 
+  val filterChestBlockEntity: BlockEntityType[FilterChestBlockEntity] =
+    makeEntity("filter_chest", (a, b) => FilterChestBlockEntity(a, b), filterChest)
 
   def init(): Unit =
     BottomlessStorageBlockEntity.registerStorages()

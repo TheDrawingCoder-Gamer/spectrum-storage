@@ -72,5 +72,6 @@ object LumoLang:
     InfoCollector.instance.bulkAddLangs(it => s"container.spectrumstorage.$it")
                  .lang("bottomless_barrel", "Bottomless Barrel")
                  .lang("bottomless_amphora", "Bottomless Amphora")
+                 .lang("filter_chest", "Filter Chest")
                  .save()
 
