@@ -19,14 +19,17 @@ class FilterChestMenu(windowId: Int, playerInv: Inventory, val container: Contai
     AbstractContainerMenu.checkContainerSize(container, FilterChestBlockEntity.inventorySize)
     container.startOpen(playerInv.player)
 
+    for y <- 0 until FilterChestMenu.rows do
+      for x <- 0 until FilterChestMenu.containerColumns do
+        this.addSlot(new Slot(container, x + y * FilterChestMenu.containerColumns, 8 + (18 * FilterChestMenu
+          .filterColumns) + x * 18, 17 + y * 18))
+
     // Y starts at  17, size is 18
     for y <- 0 until FilterChestMenu.rows do
       for x <- 0 until FilterChestMenu.filterColumns do
         this.addSlot(new FilterChestFilterSlot(filterInventory, x + y * FilterChestMenu.filterColumns, 8 + x * 18, 17 + y * 18))
 
-    for y <- 0 until FilterChestMenu.rows do
-      for x <- 0 until FilterChestMenu.containerColumns do
-        this.addSlot(new Slot(container, x + y * FilterChestMenu.containerColumns, 8 + (18 * FilterChestMenu.filterColumns) + x * 18, 17 + y * 18))
+
 
     for y <- 0 until ScreenCommon.playerRows do
       for x <- 0 until ScreenCommon.playerColumns do
