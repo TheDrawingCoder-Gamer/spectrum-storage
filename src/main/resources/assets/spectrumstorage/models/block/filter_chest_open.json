@@ -1,0 +1,6 @@
+{
+	"parent": "spectrumstorage:block/filter_chest",
+    "textures": {
+      "0": "spectrumstorage:block/filter_chest_top_open"
+    }
+}

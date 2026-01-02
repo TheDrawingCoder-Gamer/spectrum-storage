@@ -63,6 +63,18 @@ abstract class LumoBlockStateGenerator(val output: FabricDataOutput) extends Dat
                     .select(Direction.EAST, Variant.variant().`with`(VariantProperties.X_ROT, Rotation.R90)
                                                    .`with`(VariantProperties.Y_ROT, Rotation.R90))
     
+  private def barrelBlockWithModel(block: Block, closeModel: LumoModelFile, openModel: LumoModelFile): Unit =
+    blockStates(block) =
+      MultiVariantGenerator.multiVariant(block).`with`(createColumnWithFacing()).`with`:
+        PropertyDispatch.property(BlockStateProperties.OPEN)
+                        .select(false, VariantHelpers.ofModel(closeModel.location))
+                        .select(true, VariantHelpers.ofModel(openModel.location))
+
+  def barrelBlockExistingModel(block: Block): Unit =
+    val closeModel = ExistingModelFile(block.modelLoc)
+    val openModel = ExistingModelFile(block.modelLoc.withSuffix("_open"))
+    barrelBlockWithModel(block, closeModel, openModel)
+  
   def barrelBlock(block: Block): Unit =
     val sideTexture = blockTexture(block).withSuffix("_side")
     val topTexture = blockTexture(block).withSuffix("_top")
@@ -71,11 +83,7 @@ abstract class LumoBlockStateGenerator(val output: FabricDataOutput) extends Dat
   def barrelBlock(block: Block, side: ResourceLocation, top: ResourceLocation, bottom: ResourceLocation): Unit =
     val closeModel = models.cubeBottomTop(block, side, bottom, top)
     val openModel = models.cubeBottomTop(block.modelLoc.withSuffix("_open"), side, bottom, top.withSuffix("_open"))
-    blockStates(block) =
-      MultiVariantGenerator.multiVariant(block).`with`(createColumnWithFacing()).`with`:
-        PropertyDispatch.property(BlockStateProperties.OPEN)
-          .select(false, VariantHelpers.ofModel(closeModel.location))
-          .select(true, VariantHelpers.ofModel(openModel.location))
+    barrelBlockWithModel(block, closeModel, openModel)
 
   def crossBlock(block: Block, texture: ResourceLocation): Unit =
     val model = models.cross(block, texture)

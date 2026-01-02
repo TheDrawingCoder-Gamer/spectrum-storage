@@ -80,12 +80,12 @@ object SpectrumStorageBlocks:
 
   val filterChest: Block =
     InfoCollector.instance.block(SpectrumStorage.locate("filter_chest"),
-      FilterChestBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(4.0f)))
+      FilterChestBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(4.0f).noOcclusion()))
                  .lang("Filter Barrel")
                  .tag(BlockTags.MINEABLE_WITH_AXE)
                  .simpleItem()
                  .dropSelf()
-                 .blockstate(gen => block => gen.barrelBlock(block))
+                 .blockstate(gen => block => gen.barrelBlockExistingModel(block))
                  .registerItemInGroup(ItemGroupIDs.SUBTAB_FUNCTIONAL)
 
   val bottomlessShelfBlockEntity: BlockEntityType[BottomlessStorageBlockEntity] =
