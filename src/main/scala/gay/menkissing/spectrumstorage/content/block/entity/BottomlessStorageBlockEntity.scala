@@ -11,7 +11,7 @@ import gay.menkissing.spectrumstorage.screen.BottomlessStorageMenu
 import net.fabricmc.fabric.api.transfer.v1.fluid.{FluidStorage, FluidVariant}
 import net.fabricmc.fabric.api.transfer.v1.item.{ItemStorage, ItemVariant}
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions
-import net.fabricmc.fabric.api.transfer.v1.storage.base.{CombinedStorage, ResourceAmount, SingleSlotStorage}
+import net.fabricmc.fabric.api.transfer.v1.storage.base.{CombinedSlottedStorage, CombinedStorage, ResourceAmount, SingleSlotStorage}
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant
 import net.minecraft.core.registries.BuiltInRegistries
@@ -45,9 +45,9 @@ abstract class BottomlessStorageBlockEntity(val capacity: Int, baseEntity: Block
 
 
   val itemStorage: CombinedStorage[ItemVariant, BundleItemStorageWrapper] =
-    CombinedStorage((0 until capacity).map(BundleItemStorageWrapper(_)).toList.asJava)
-  val fluidStorage: CombinedStorage[FluidVariant, BottleFluidStorageWrapper] =
-    CombinedStorage((0 until capacity).map(BottleFluidStorageWrapper(_)).toList.asJava)
+    CombinedSlottedStorage((0 until capacity).map(BundleItemStorageWrapper(_)).toList.asJava)
+  val fluidStorage: CombinedSlottedStorage[FluidVariant, BottleFluidStorageWrapper] =
+    CombinedSlottedStorage((0 until capacity).map(BottleFluidStorageWrapper(_)).toList.asJava)
 
   class BundleItemStorageWrapper(val slot: Int) extends SnapshotParticipant[ResourceAmount[ItemVariant]], SingleSlotStorage[ItemVariant]:
     var filter: ItemVariant = ItemVariant.blank()

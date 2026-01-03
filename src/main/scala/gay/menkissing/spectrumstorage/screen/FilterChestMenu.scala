@@ -41,11 +41,11 @@ class FilterChestMenu(windowId: Int, playerInv: Inventory, val container: Contai
   override def quickMoveStack(player: Player, i: Int): ItemStack =
     var stack = ItemStack.EMPTY
     val slot = this.slots.get(i)
-    if slot.hasItem then
+    if !slot.isInstanceOf[FilterChestFilterSlot] && slot.hasItem then
       val stack2 = slot.getItem
       stack = stack2.copy()
       if i < FilterChestBlockEntity.inventorySize then
-        if !this.moveItemStackTo(stack2, 9, 45, true) then
+        if !this.moveItemStackTo(stack2, FilterChestMenu.playerSlotStart, FilterChestMenu.playerSlotEnd, true) then
           return ItemStack.EMPTY
       else if !this.moveItemStackTo(stack2, 0, 9, false) then
         return ItemStack.EMPTY
@@ -77,6 +77,11 @@ object FilterChestMenu:
   val rows = 3
   val filterColumns = 6
   val containerColumns = 3
+  val playerSlotStart = FilterChestBlockEntity.inventorySize + FilterChestBlockEntity.filterCount
+  val playerSlotEnd = playerSlotStart + 9 * 4
+
+  def isShadowSlot(slot: Int): Boolean =
+    slot >= FilterChestBlockEntity.inventorySize && slot < FilterChestBlockEntity.inventorySize + FilterChestBlockEntity.filterCount
 
 
   def apply(windowId: Int, playerInv: Inventory, blockEntity: FilterChestBlockEntity): FilterChestMenu =
