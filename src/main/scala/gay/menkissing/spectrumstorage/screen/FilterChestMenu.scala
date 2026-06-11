@@ -1,11 +1,10 @@
 package gay.menkissing.spectrumstorage.screen
 
 import de.dafuqs.spectrum.api.block.FilterConfigurable
-import de.dafuqs.spectrum.inventories.slots.ShadowSlot
+import de.dafuqs.spectrum.inventories.slots.{FilterSlot, ShadowSlot}
 import gay.menkissing.spectrumstorage.content.block.entity.FilterChestBlockEntity
 import gay.menkissing.spectrumstorage.registries.SpectrumStorageScreens
 import io.netty.buffer.ByteBuf
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.codec.{ByteBufCodecs, StreamCodec}
@@ -30,8 +29,7 @@ class FilterChestMenu(windowId: Int, playerInv: Inventory, val container: Contai
     // Y starts at  17, size is 18
     for y <- 0 until FilterChestMenu.rows do
       for x <- 0 until FilterChestMenu.filterColumns do
-        this.addSlot(new FilterChestFilterSlot(filterInventory, x + y * FilterChestMenu.filterColumns, 8 + x * 18, 17 + y * 18))
-
+        this.addSlot(new FilterSlot(blockEntity, filterInventory, x + y * FilterChestMenu.filterColumns, 8 + x * 18, 17 + y * 18))
 
 
     for y <- 0 until ScreenCommon.playerRows do
@@ -44,7 +42,7 @@ class FilterChestMenu(windowId: Int, playerInv: Inventory, val container: Contai
   override def quickMoveStack(player: Player, i: Int): ItemStack =
     var stack = ItemStack.EMPTY
     val slot = this.slots.get(i)
-    if !slot.isInstanceOf[FilterChestFilterSlot] && slot.hasItem then
+    if !slot.isInstanceOf[FilterSlot] && slot.hasItem then
       val stack2 = slot.getItem
       stack = stack2.copy()
       if i < FilterChestBlockEntity.inventorySize then
@@ -69,12 +67,6 @@ class FilterChestMenu(windowId: Int, playerInv: Inventory, val container: Contai
   override def stillValid(player: Player): Boolean =
     this.playerInv.stillValid(player)
 
-  protected class FilterChestFilterSlot(container: Container, index: Int, x: Int, y: Int) extends ShadowSlot(container, index, x, y):
-
-    override def onClicked(heldStack: ItemStack, kind: ClickAction, player: Player): Boolean =
-      if blockEntity != null then
-        blockEntity.setFilterItem(getContainerSlot, heldStack)
-      super.onClicked(heldStack, kind, player)
 
 object FilterChestMenu:
   val rows = 3

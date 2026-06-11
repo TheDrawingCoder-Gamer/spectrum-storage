@@ -1,6 +1,6 @@
 package gay.menkissing.spectrumstorage.util
 
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.neoforged.neoforge.fluids.FluidType
 
 object SpectrumStorageNumberFormatting:
   def formatMB(mb: Int): String =
@@ -11,6 +11,6 @@ object SpectrumStorageNumberFormatting:
     else
       String.format("%1$.2fM", mb / 1000000f)
 
-  def formatFluidMax(amountDroplets: Long): String =
-    val buckets = math.round(amountDroplets.toFloat / FluidConstants.BUCKET)
+  def formatFluidMax(amountMb: Int): String =
+    val buckets = math.round(amountMb.toFloat / FluidType.BUCKET_VOLUME)
     buckets.toString

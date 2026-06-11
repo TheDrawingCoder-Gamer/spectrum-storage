@@ -78,10 +78,6 @@ repositories {
             includeModule("org.typelevel", "cats-free_3")
         }
     }
-    // FF API
-    maven {
-        url "https://maven.su5ed.dev/releases"
-    }
 }
 
 dependencies {
@@ -101,8 +97,6 @@ dependencies {
     implementation "de.dafuqs:Spectrum:${project.spectrum_version}-neo"
     implementation("com.klikli_dev:modonomicon-${project.minecraft_version}-neoforge:${project.modonomicon_version}")
     implementation "de.dafuqs:Fractal:${project.fractal_version}"
-    implementation "org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.fabric_api_version}"
-
     // Item viewer
     switch (recipe_viewer.toLowerCase(Locale.ROOT)) {
         case "rei": runtimeOnly("me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"); break

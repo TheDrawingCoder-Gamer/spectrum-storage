@@ -89,8 +89,7 @@ class FilterChestBlockEntity(pos: BlockPos, state: BlockState) extends Randomiza
     if stack.isEmpty then
       false
     else
-      filterItems.stream().anyMatch(it => !it.isEmpty && stack.is(it.getItem)) ||
-        filterItems.stream().allMatch(_.isEmpty)
+      acceptsItem(stack.getItem)
 
   override def canPlaceItemThroughFace(i: Int, stack: ItemStack, direction: Direction): Boolean =
     acceptsItemStack(stack)
@@ -104,7 +103,9 @@ class FilterChestBlockEntity(pos: BlockPos, state: BlockState) extends Randomiza
 
   override def getItemFilters: util.List[ItemStack] = filterItems
 
-  override def setFilterItem(slot: Int, item: ItemStack): Unit = filterItems.set(slot, item)
+  override def setFilterItem(slot: Int, item: ItemStack): Unit =
+    setChanged()
+    filterItems.set(slot, item)
 
   override def saveAdditional(tag: CompoundTag, provider: HolderLookup.Provider): Unit =
     super.saveAdditional(tag, provider)

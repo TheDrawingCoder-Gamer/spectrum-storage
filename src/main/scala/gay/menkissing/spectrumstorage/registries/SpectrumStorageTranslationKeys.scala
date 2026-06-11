@@ -22,6 +22,6 @@ object SpectrumStorageTranslationKeys:
       val usagePlace: Component = Component.translatable(keys.bottomlessBottle.tooltip.usagePlace)
       
       val empty: Component = Component.translatable(keys.bottomlessBottle.tooltip.empty)
-      def countMB(amount: Int, max: Long): Component =
+      def countMB(amount: Int, max: Int): Component =
         Component.translatable(keys.bottomlessBottle.tooltip.countMB, SpectrumStorageNumberFormatting.formatMB(amount), SpectrumStorageNumberFormatting.formatFluidMax(max))
         

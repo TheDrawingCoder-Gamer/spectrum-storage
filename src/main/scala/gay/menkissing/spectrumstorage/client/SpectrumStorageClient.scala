@@ -6,7 +6,6 @@ import gay.menkissing.spectrumstorage.client.gui.{FilterChestGui, SharedContaine
 import gay.menkissing.spectrumstorage.content.SpectrumStorageBlocks
 import gay.menkissing.spectrumstorage.registries.SpectrumStorageScreens
 import gay.menkissing.spectrumstorage.screen.BottomlessStorageMenu
-import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.client.renderer.RenderType
 import net.neoforged.api.distmarker.Dist

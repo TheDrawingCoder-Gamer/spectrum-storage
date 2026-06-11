@@ -10,7 +10,6 @@ import gay.menkissing.spectrumstorage.util.registry.book.{BookEntry, EntryLocati
 import gay.menkissing.spectrumstorage.util.registry.provider.generators.SpectrumStorageBaseBookProvider
 import gay.menkissing.spectrumstorage.util.registry.provider.generators.book.BookPedestalPageModel
 import gay.menkissing.spectrumstorage.util.resources.{*, given}
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.minecraft.core.registries.Registries
 import net.minecraft.core.{Holder, HolderLookup, HolderOwner}
 import net.minecraft.data.PackOutput

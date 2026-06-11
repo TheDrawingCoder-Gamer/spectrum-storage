@@ -2,15 +2,13 @@ package gay.menkissing.spectrumstorage.content
 
 import gay.menkissing.spectrumstorage.SpectrumStorage
 import gay.menkissing.spectrumstorage.content.item.{BottomlessBottleItem, ToolContainerItem}
-import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.{Item, ItemStack}
 import de.dafuqs.fractal.api.CreativeSubTabEvent
 import de.dafuqs.spectrum.api.item_group.ItemGroupIDs
 import gay.menkissing.spectrumstorage.content.SpectrumStorageBlocks.blockItems
 import gay.menkissing.spectrumstorage.registries.SpectrumStorageComponents
-import gay.menkissing.spectrumstorage.util.{FluidConverter, SpectrumStorageEnchantmentHelper}
+import gay.menkissing.spectrumstorage.util.SpectrumStorageEnchantmentHelper
 import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
@@ -18,7 +16,6 @@ import net.neoforged.neoforge.capabilities.{Capabilities, RegisterCapabilitiesEv
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.registries.{DeferredItem, DeferredRegister, RegisterEvent}
-import org.sinytra.fabric.transfer_api.compat.FluidStorageFluidHandlerItem
 
 import scala.collection.mutable
 import scala.jdk.CollectionConverters.*
@@ -73,7 +70,7 @@ object SpectrumStorageItems:
       it.registerItem(
         Capabilities.FluidHandler.ITEM,
         (stack, _) => {
-          FluidHandlerItemStack(SpectrumStorageComponents.BottomlessBottleContentsComponent, stack, FluidConverter.dropletToMb(BottomlessBottleItem.getMaxStack(stack)))
+          FluidHandlerItemStack(SpectrumStorageComponents.BottomlessBottleContentsComponent, stack, BottomlessBottleItem.getMaxStack(stack))
         },
         bottomlessBottle.get()
       )
