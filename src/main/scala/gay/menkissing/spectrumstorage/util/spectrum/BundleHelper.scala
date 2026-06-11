@@ -25,7 +25,7 @@ object BundleHelper:
       stack.set(SpectrumDataComponentTypes.BOTTOMLESS_STACK, BottomlessComponent(handler))
 
     def increment(n: Long): Unit =
-      this.count += math.min(this.max, this.count + n)
+      this.count = math.min(this.max, this.count + n)
 
     def insert(variant: ItemResource, count: Int): Int =
       if this.isEmpty then
